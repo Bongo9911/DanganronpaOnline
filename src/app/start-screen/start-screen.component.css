@@ -1,0 +1,11 @@
+h1 {
+	text-align: center;
+}
+
+.menu {
+	text-align:center;
+}
+
+.menu * {
+	margin: 0 auto;
+}
