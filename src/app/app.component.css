@@ -1,0 +1,32 @@
+h1 {
+	text-align: center;
+	font-size: 40pt;
+	padding-top: 20pt;
+	color: #eee;
+}
+
+button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20%;
+	margin-top: 50pt;
+}
+
+.code-form {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20%;
+	margin-top: 10pt;
+	margin-bottom: -40pt;
+}
+
+.name-form {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20%;
+	margin-top: 30pt;
+	margin-bottom: -40pt;
+}

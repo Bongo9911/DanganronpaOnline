@@ -1,13 +1,27 @@
-<router-outlet></router-outlet>
+<h1>Danganronpa Online</h1>
 
-<button mat-raised-button color="primary">Primary</button>
+<div *ngIf="!gameID.length">
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/8.2.5/firebase-app.js"></script>
+	
+	<mat-form-field class="name-form">
+		<mat-label>Enter name</mat-label>
+		<input matInput placeholder="ex. Bongo" [(ngModel)]="name" >
+	</mat-form-field>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/8.2.5/firebase-analytics.js"></script>
+	<button mat-raised-button color="primary" (click)='createGame()' [disabled]='!name.length'>Create Game</button>
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
+	<mat-form-field class="code-form">
+		<mat-label>Enter game code</mat-label>
+		<input matInput placeholder="ex. ABCD" [(ngModel)]="enteredID">
+	</mat-form-field>
+	<button mat-raised-button color="primary" (click)='joinGame()' [disabled]='!name.length || !enteredID.length'>Join Game</button>
+
+	
+</div>
+
+{{name}}
+
+
+<div *ngIf="gameID.length">
+	<h2>Game Code: {{gameID}}</h2>
+</div>
