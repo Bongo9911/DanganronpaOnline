@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'Danganronpa Online';
 
-  gameID: string = 'DYUN';
+  gameID: string = '';
   room: string = 'Lobby';
 
   enteredID: string = '';
-  name: string = 'Bongo';
+  name: string = '';
   message: string;
 
   player$: Player[];
