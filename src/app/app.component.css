@@ -30,3 +30,78 @@ button {
 	margin-top: 30pt;
 	margin-bottom: -40pt;
 }
+
+.playerlabel {
+	padding-top: 1pt;
+	padding-bottom: 1pt;
+	width: 90%;
+	display: block;
+	border: .25pt solid #777;
+	border-radius: 2px;
+	background-color: #303030;
+	margin-bottom: 2pt;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 8pt;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-areas: 'game game game game players chat' 'game game game game players chat' 'game game game game players chat' 'stats stats stats stats stats chat';
+	grid-gap: 1vw;
+	width: 98%;
+	margin-left: 1vw;
+	height: 80%;
+}
+
+.game {
+	grid-area: game;
+	width: 56vw;
+}
+
+.players {
+	grid-area: players;
+	width: 20vw;
+}
+
+.chat {
+	grid-area: chat;
+	width: 20vw;
+}
+
+.stats {
+	grid-area: stats;
+}
+
+.grid-container>div {
+	background-color: #424242;
+	text-align: center;
+	padding: 20px 0;
+}
+
+.icon {
+	width: 15vmin;
+	height: 15vmin;
+	margin-left: -85%;
+	display: inline-block;
+}
+
+.chatbox {
+	display: block;
+	border: 1px solid white;
+	height: 80%;
+	width: 88%;
+	margin-left: 4%;
+	text-align: left;
+	padding-top: 5px;
+	padding-left: 3%;
+}
+
+.message {
+	width: 80%;
+}
+
+.playerlist {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
