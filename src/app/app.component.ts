@@ -58,6 +58,8 @@ export class AppComponent {
       });
 
     this.gameID = resultID;
+
+    this.subscribeToCollections();
   }
 
   joinGame(): void {
@@ -75,13 +77,7 @@ export class AppComponent {
                   name: this.name,
                 });
 
-              this.firestore.collection<Game>('games').doc(this.gameID)
-                .collection<Player>('players').valueChanges()
-                .subscribe(result => this.player$ = result);
-
-              this.firestore.collection<Game>('games').doc(this.gameID)
-                .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
-                .subscribe(result => this.message$ = result);
+              this.subscribeToCollections();
             }
             else {
               //TODO: Add error message for full lobby
@@ -94,7 +90,17 @@ export class AppComponent {
     });
   }
 
-  sendMessage() : void {
+  subscribeToCollections(): void {
+    this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Player>('players').valueChanges()
+      .subscribe(result => this.player$ = result);
+
+    this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
+      .subscribe(result => this.message$ = result);
+  }
+
+  sendMessage(): void {
     this.firestore.collection<Game>('games').doc(this.gameID).collection<Chat>('chat').add({
       message: this.name + ': ' + this.message,
       room: this.room,
