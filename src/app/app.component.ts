@@ -11,24 +11,24 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'Danganronpa Online';
 
-  gameID: string = 'DYUN';
-  room: string = 'Lobby';
+  gameID: string = '';
+  room: string = '';
 
   enteredID: string = '';
-  name: string = 'Bongo';
+  name: string = '';
   message: string;
 
   player$: Player[];
   message$: Chat[];
 
   constructor(private firestore: AngularFirestore) {
-    this.firestore.collection<Game>('games').doc(this.gameID)
-      .collection<Player>('players').valueChanges()
-      .subscribe(result => this.player$ = result);
+    // this.firestore.collection<Game>('games').doc(this.gameID)
+    //   .collection<Player>('players').valueChanges()
+    //   .subscribe(result => this.player$ = result);
 
-    this.firestore.collection<Game>('games').doc(this.gameID)
-      .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
-      .subscribe(result => this.message$ = result);
+    // this.firestore.collection<Game>('games').doc(this.gameID)
+    //   .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
+    //   .subscribe(result => this.message$ = result);
   }
 
   // getMessages() : Observable<FirestoreRec[]>{
@@ -58,6 +58,7 @@ export class AppComponent {
       });
 
     this.gameID = resultID;
+    this.room = 'Lobby';
 
     this.subscribeToCollections();
   }
@@ -72,6 +73,7 @@ export class AppComponent {
             if (size < 16) { //checks to make sure player cap hasn't been reached
               //TODO: Check if a player in the lobbby already has the name you want
               this.gameID = this.enteredID;
+              this.room = 'Lobby';
               this.firestore.collection<Game>('games').doc(this.gameID)
                 .collection<Player>('players').doc(this.name).set({
                   name: this.name,
