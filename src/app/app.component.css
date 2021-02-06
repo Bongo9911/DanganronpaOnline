@@ -42,7 +42,7 @@ button {
 	margin-bottom: 2pt;
 	margin-left: auto;
 	margin-right: auto;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 
 .grid-container {
@@ -67,6 +67,7 @@ button {
 .chat {
 	grid-area: chat;
 	width: 20vw;
+	height: 70vh;
 }
 
 .stats {

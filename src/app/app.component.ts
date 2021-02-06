@@ -11,24 +11,24 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'Danganronpa Online';
 
-  gameID: string = '';
+  gameID: string = 'DYUN';
   room: string = 'Lobby';
 
   enteredID: string = '';
-  name: string = '';
+  name: string = 'Bongo';
   message: string;
 
   player$: Player[];
   message$: Chat[];
 
   constructor(private firestore: AngularFirestore) {
-    // this.firestore.collection<Game>('games').doc(this.gameID)
-    //   .collection<Player>('players').valueChanges()
-    //   .subscribe(result => this.player$ = result);
+    this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Player>('players').valueChanges()
+      .subscribe(result => this.player$ = result);
 
-    // this.firestore.collection<Game>('games').doc(this.gameID)
-    //   .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
-    //   .subscribe(result => this.message$ = result);
+    this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
+      .subscribe(result => this.message$ = result);
   }
 
   // getMessages() : Observable<FirestoreRec[]>{
