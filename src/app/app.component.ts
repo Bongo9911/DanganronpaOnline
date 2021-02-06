@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +10,42 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   title = 'Danganronpa Online';
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  chatSub : Subscription;
 
-  gameID: string = '';
-  room: string = '';
+  gameID: string = 'AXLP';
+  room: string = 'Lobby';
 
   enteredID: string = '';
-  name: string = '';
+  name: string = 'Bongo';
   message: string;
 
   player$: Player[];
   message$: Chat[];
 
   constructor(private firestore: AngularFirestore) {
-    // this.firestore.collection<Game>('games').doc(this.gameID)
-    //   .collection<Player>('players').valueChanges()
-    //   .subscribe(result => this.player$ = result);
+    this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Player>('players').valueChanges()
+      .subscribe(result => this.player$ = result);
 
-    // this.firestore.collection<Game>('games').doc(this.gameID)
-    //   .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
-    //   .subscribe(result => this.message$ = result);
+    this.chatSub = this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp')).valueChanges()
+      .subscribe(result => this.message$ = result);
   }
 
-  // getMessages() : Observable<FirestoreRec[]>{
-  //   //return this.firestore.collection<FirestoreRec>('messages', ref => ref.orderBy('timestamp')).valueChanges()
-  // }
+  ngOnInit() { 
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked() {        
+      this.scrollToBottom();        
+  } 
+
+  scrollToBottom(): void {
+      try {
+          this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      } catch(err) { }                 
+  }
 
   createGame(): void {
     //TODO: Add check for duplicate IDs
@@ -111,6 +123,14 @@ export class AppComponent {
       timestamp: new firebase.default.firestore.Timestamp(Date.now() / 1000, 0),
     });
     this.message = "";
+  }
+
+  switchRoom() : void {
+    this.room = 'Nothing'
+    this.chatSub.unsubscribe();
+    this.chatSub = this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp')).valueChanges()
+      .subscribe(result => this.message$ = result);
   }
 }
 

@@ -5,6 +5,10 @@ h1 {
 	color: #eee;
 }
 
+h2 {
+	font-size: 3vmin;
+}
+
 button {
 	display: block;
 	margin-left: auto;
@@ -32,8 +36,8 @@ button {
 }
 
 .playerlabel {
-	padding-top: 1pt;
-	padding-bottom: 1pt;
+	padding-top: 2pt;
+	padding-bottom: 2pt;
 	width: 90%;
 	display: block;
 	border: .25pt solid #777;
@@ -42,26 +46,30 @@ button {
 	margin-bottom: 2pt;
 	margin-left: auto;
 	margin-right: auto;
-	font-size: 9pt;
+	font-size: 2vmin;
+	line-height: 100%;
 }
 
 .grid-container {
 	display: grid;
 	grid-template-areas: 'game game game game players chat' 'game game game game players chat' 'game game game game players chat' 'stats stats stats stats stats chat';
-	grid-gap: 1vw;
-	width: 98%;
+	column-gap: 1vw;
+	row-gap: 2vh;
 	margin-left: 1vw;
-	height: 80%;
+	margin-right: 1vw;
+	height: 70vh;
 }
 
 .game {
 	grid-area: game;
 	width: 56vw;
+	height: 52vh;
 }
 
 .players {
 	grid-area: players;
 	width: 20vw;
+	height: 52vh;
 }
 
 .chat {
@@ -72,6 +80,7 @@ button {
 
 .stats {
 	grid-area: stats;
+	height: 10vh;
 }
 
 .grid-container>div {
@@ -81,21 +90,22 @@ button {
 }
 
 .icon {
-	width: 15vmin;
-	height: 15vmin;
-	margin-left: -85%;
-	display: inline-block;
+	width: 9vh;
+	height: 9vh;
 }
 
 .chatbox {
 	display: block;
 	border: 1px solid white;
 	height: 80%;
-	width: 88%;
+	width: 85%;
 	margin-left: 4%;
 	text-align: left;
 	padding-top: 5px;
 	padding-left: 3%;
+	padding-right: 3%;
+	word-wrap: break-word;
+	overflow-y: auto; /* adds a vertical scroll bar */
 }
 
 .message {
