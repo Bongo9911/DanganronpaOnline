@@ -1,15 +1,17 @@
 h1 {
 	text-align: center;
-	font-size: 40pt;
+	font-size: 8vmin;
 	padding-top: 20pt;
 	color: #eee;
 }
 
 h2 {
 	font-size: 3vmin;
+	margin-bottom: 1vh;
+	margin-top: -1vh;
 }
 
-button {
+.menuButton {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -36,18 +38,18 @@ button {
 }
 
 .playerlabel {
-	padding-top: 2pt;
-	padding-bottom: 2pt;
+	padding-top: .2vh;
+	padding-bottom: .2vh;
 	width: 90%;
 	display: block;
 	border: .25pt solid #777;
-	border-radius: 2px;
+	border-radius: 3px;
 	background-color: #303030;
-	margin-bottom: 2pt;
+	margin-bottom: .4vh;
 	margin-left: auto;
 	margin-right: auto;
-	font-size: 2vmin;
-	line-height: 100%;
+	font-size: 2vh;
+	line-height: 4.5vh;
 }
 
 .grid-container {
@@ -58,29 +60,30 @@ button {
 	margin-left: 1vw;
 	margin-right: 1vw;
 	height: 70vh;
+	margin-top: 4vh;
 }
 
 .game {
 	grid-area: game;
 	width: 56vw;
-	height: 52vh;
+	height: 57vh;
 }
 
 .players {
 	grid-area: players;
 	width: 20vw;
-	height: 52vh;
+	height: 57vh;
 }
 
 .chat {
 	grid-area: chat;
 	width: 20vw;
-	height: 70vh;
+	height: 79vh;
 }
 
 .stats {
 	grid-area: stats;
-	height: 10vh;
+	height: 14vh;
 }
 
 .grid-container>div {
@@ -96,23 +99,51 @@ button {
 
 .chatbox {
 	display: block;
-	border: 1px solid white;
+	border: .4vmin solid #bbb;
+	border-radius: 10px;
 	height: 80%;
 	width: 85%;
 	margin-left: 4%;
 	text-align: left;
-	padding-top: 5px;
+	padding-top: .7vh;
+	padding-bottom: .7vh;
 	padding-left: 3%;
 	padding-right: 3%;
 	word-wrap: break-word;
 	overflow-y: auto; /* adds a vertical scroll bar */
+	font-size: 2vh;
+}
+
+.messagebox {
+	width: 85%;
 }
 
 .message {
-	width: 80%;
+	bottom: .15vh;
+	top: .15vh;
 }
 
 .playerlist {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #888;
+}
+
+::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: #888;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #333;
 }

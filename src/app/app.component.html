@@ -8,7 +8,8 @@
 		<input matInput placeholder="ex. Bongo" [(ngModel)]="name" >
 	</mat-form-field>
 
-	<button mat-raised-button color="primary" (click)='createGame()' [disabled]='!name.length'>Create Game</button>
+	<button mat-raised-button color="primary" (click)='createGame()' [disabled]='!name.length'
+		class="menuButton">Create Game</button>
 
 	<mat-form-field class="code-form">
 		<mat-label>Enter game code</mat-label>
@@ -16,21 +17,21 @@
 			maxlength="4" onkeypress="return /[a-z]/i.test(event.key)" (keyup.enter)="joinGame()">
 	</mat-form-field>
 	<button mat-raised-button color="primary" [disabled]='!name.length || !enteredID.length'
-		(click)='joinGame()'>Join Game</button>
+		(click)='joinGame()' class="menuButton">Join Game</button>
 
 	
 </div>
 
-{{name}}
-
-
 <div *ngIf="gameID.length">
-	<h2>Game Code: {{gameID}}</h2>
-
 	<div class="grid-container">
 		<div class="game">
 			Game
+			{{name}}
+			<h2>Game Code: {{gameID}}</h2>
+			<br/>
 			<button mat-raised-button color="primary" (click)='switchRoom()'>Change Room</button>
+			<br/>
+			<button mat-raised-button color="primary" (click)='startGame()'>Start Game</button>
 		</div>
 		<div class="players">	
 			<h2>Players:</h2>
@@ -43,11 +44,11 @@
 		<div class="chat">
 			<h2>Chat</h2>
 			<div #scrollMe class="chatbox">
-				<div *ngFor="let message of message$">
-					{{message.message}}
+				<div *ngFor="let message of message$" class="message">
+					<b>{{message.author}}</b>: {{message.message}}
 				</div>
 			</div>
-			<mat-form-field class="message">
+			<mat-form-field class="messagebox">
 				<input matInput placeholder="Send a message" [(ngModel)]="message" (keyup.enter)="sendMessage()">
 			</mat-form-field>
 		</div>  

@@ -9,11 +9,11 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Danganronpa Online';
+  title: string = 'Danganronpa Online';
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  chatSub : Subscription;
+  chatSub: Subscription;
 
-  gameID: string = 'AXLP';
+  gameID: string = 'DYUN';
   room: string = 'Lobby';
 
   enteredID: string = '';
@@ -23,30 +23,35 @@ export class AppComponent {
   player$: Player[];
   message$: Chat[];
 
+  //Initializes any necessary functions for the game to run
   constructor(private firestore: AngularFirestore) {
     this.firestore.collection<Game>('games').doc(this.gameID)
       .collection<Player>('players').valueChanges()
       .subscribe(result => this.player$ = result);
 
     this.chatSub = this.firestore.collection<Game>('games').doc(this.gameID)
-      .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp')).valueChanges()
-      .subscribe(result => this.message$ = result);
+      .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp'))
+      .valueChanges().subscribe(result => this.message$ = result);
   }
 
-  ngOnInit() { 
+  //Scrolls the chat to the bottom on initialization
+  ngOnInit() {
     this.scrollToBottom();
   }
 
-  ngAfterViewChecked() {        
-      this.scrollToBottom();        
-  } 
-
-  scrollToBottom(): void {
-      try {
-          this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-      } catch(err) { }                 
+  //Calls scrollToBottom when a new chat message is sent or received
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
+  //Auto-scrolls chat to the bottom
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
+
+  //createGame() creates a game with a random 4 character ID
   createGame(): void {
     //TODO: Add check for duplicate IDs
     //TODO: Add timeout for games with no activity
@@ -75,6 +80,7 @@ export class AppComponent {
     this.subscribeToCollections();
   }
 
+  //joinGame() attempts to connect the player using the name and code they entered
   joinGame(): void {
     this.enteredID = this.enteredID.toUpperCase();
     const usersRef = this.firestore.collection('games').doc(this.enteredID).get().toPromise().then(async (docSnapshot) => {
@@ -104,19 +110,22 @@ export class AppComponent {
     });
   }
 
+  //Subscribes to the collections needed for the lobby
   subscribeToCollections(): void {
     this.firestore.collection<Game>('games').doc(this.gameID)
       .collection<Player>('players').valueChanges()
       .subscribe(result => this.player$ = result);
 
-    this.firestore.collection<Game>('games').doc(this.gameID)
-      .collection<Chat>('chat', ref => ref.orderBy('timestamp')).valueChanges()
-      .subscribe(result => this.message$ = result);
+    this.chatSub = this.firestore.collection<Game>('games').doc(this.gameID)
+      .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp'))
+      .valueChanges().subscribe(result => this.message$ = result);
   }
 
+  //Send a message to the chat in the current room
   sendMessage(): void {
     this.firestore.collection<Game>('games').doc(this.gameID).collection<Chat>('chat').add({
-      message: this.name + ': ' + this.message,
+      author: this.name,
+      message: this.message,
       room: this.room,
       gametime: 0,
       day: 0,
@@ -125,12 +134,20 @@ export class AppComponent {
     this.message = "";
   }
 
-  switchRoom() : void {
+  //Debug function for switching the room to test chat
+  switchRoom(): void {
     this.room = 'Nothing'
     this.chatSub.unsubscribe();
     this.chatSub = this.firestore.collection<Game>('games').doc(this.gameID)
       .collection<Chat>('chat', ref => ref.where('room', '==', this.room).orderBy('timestamp')).valueChanges()
       .subscribe(result => this.message$ = result);
+  }
+
+  //Starts the game with the players currently in the lobby
+  startGame(): void {
+    this.firestore.collection<Game>('games').doc(this.gameID).update({
+      Phase: 'Day',
+    });
   }
 }
 
@@ -146,6 +163,7 @@ interface Player {
 }
 
 interface Chat {
+  author: string
   message: string
   room: string
   gametime: number
