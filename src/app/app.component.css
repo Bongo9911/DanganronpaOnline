@@ -100,7 +100,7 @@ h2 {
 .chatbox {
 	display: block;
 	border: .4vmin solid #bbb;
-	border-radius: 10px;
+	border-radius: .8vw;
 	height: 80%;
 	width: 85%;
 	margin-left: 4%;
@@ -111,7 +111,7 @@ h2 {
 	padding-right: 3%;
 	word-wrap: break-word;
 	overflow-y: auto; /* adds a vertical scroll bar */
-	font-size: 2vh;
+	font-size: 1vw;
 }
 
 .messagebox {
@@ -119,8 +119,8 @@ h2 {
 }
 
 .message {
-	bottom: .15vh;
-	top: .15vh;
+	margin-top: 1vh;
+	line-height: 1vw;
 }
 
 .playerlist {
@@ -131,13 +131,13 @@ h2 {
 ::-webkit-scrollbar-track
 {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  border-radius: 10px;
+  border-radius: .8vw;
   background-color: #888;
 }
 
 ::-webkit-scrollbar
 {
-  width: 10px;
+  width: .8vw;
   background-color: #888;
 }
 
